@@ -1,3 +1,27 @@
+insert into authors (firstName, lastName) values ('Drucie' ,'Goodbourn');
+insert into authors (firstName, lastName) values ('Marcia' ,'Aggiss');
+insert into authors (firstName, lastName) values ('Giovanni', 'Bigg');
+insert into authors (firstName, lastName) values ('Duffie' ,'Eynon');
+insert into authors (firstName, lastName) values ('Anselma', 'McKennan');
+insert into authors (firstName, lastName) values ('Gert', 'Kira');
+insert into authors (firstName, lastName) values ('Clerc', 'Djakovic');
+insert into authors (firstName, lastName) values ('Stacee', 'Elsy');
+insert into authors (firstName, lastName) values ('Dorotea', 'Bonhill');
+/*
+insert into authors (firstName, lastName) values ('Dorotea', 'Bonhill');
+insert into books (author_id, title, priceOld, price) values ('integrate one-to-one systems', '$258.51', '$52.25');
+    @Override
+    public boolean removeItemById(Integer bookIdToRemove) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("id",bookIdToRemove);
+        jdbcTemplate.update("DELETE FROM books WHERE id = :id",parameterSource);
+        logger.info("remove book completed");
+        return true;
+    }
+
+ */
+
+
 insert into books (author, title, priceOld, price) values ('Drucie Goodbourn', 'exploit real-time e-commerce', '$203.23', '$43.37');
 insert into books (author, title, priceOld, price) values ('Marcia Aggiss', 'utilize real-time interfaces', '$260.31', '$35.96');
 insert into books (author, title, priceOld, price) values ('Giovanni Bigg', 'extend strategic e-services', '$272.00', '$151.04');
