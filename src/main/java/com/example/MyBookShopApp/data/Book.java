@@ -18,6 +18,16 @@ public class Book {
                 '}';
     }
 
+    public Book() {
+    }
+
+    public Book(String author, String title, String priceOld, String price) {
+        this.author = author;
+        this.title = title;
+        this.priceOld = priceOld;
+        this.price = price;
+    }
+
     public Integer getId() {
         return id;
     }
