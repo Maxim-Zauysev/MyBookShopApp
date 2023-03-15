@@ -26,6 +26,7 @@ public class LocaleChangeConfig implements WebMvcConfigurer {
         return localeChangeInterceptor;
     }
 
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());

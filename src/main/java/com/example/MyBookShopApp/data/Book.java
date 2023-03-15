@@ -1,32 +1,22 @@
 package com.example.MyBookShopApp.data;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Transient
     private String author;
+
     private String title;
     private String priceOld;
     private String price;
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", priceOld='" + priceOld + '\'' +
-                ", price='" + price + '\'' +
-                '}';
-    }
-
-    public Book() {
-    }
-
-    public Book(String author, String title, String priceOld, String price) {
-        this.author = author;
-        this.title = title;
-        this.priceOld = priceOld;
-        this.price = price;
-    }
 
     public Integer getId() {
         return id;

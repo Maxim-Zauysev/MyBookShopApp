@@ -28,6 +28,17 @@
   <link rel="stylesheet" href="/assets/css/extra.min.css?v=09585989"><!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script defer src="/assets/js/scripts.min.js?v=09585989"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function (){
+      $("#locales").change(function (){
+        var selectedOption = $("#locales").val();
+        if(selectedOption != ''){
+          window.location.replace('?lang='+selectedOption);
+        }
+      });
+    });
+  </script>
 </head>
 <body class="Site">
   <!--if lt IE 8
@@ -44,25 +55,25 @@
     <div class="wrap">
       <main class="Middle-main">
         <ul class="breadcrumbs">
-          <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
+          <li class="breadcrumbs-item"><a href="/index.html" th:text="#{topbar.main}">Главная</a>
           </li>
-          <li class="breadcrumbs-item"><a href="/genres/index.html">Книги</a>
+          <li class="breadcrumbs-item"><a href="/genres/index.html"th:text="#{news.books}">Книги</a>
           </li>
-          <li class="breadcrumbs-item breadcrumbs-item_current"><span>Новинки</span>
+          <li class="breadcrumbs-item breadcrumbs-item_current" th:text="#{footer.news}"><span>Новинки</span>
           </li>
         </ul>
         <div class="Section">
           <div class="Section-header">
-            <h1 class="Section-title">Новинки
+            <h1 class="Section-title" th:text="#{news.news}">Новинки
             </h1>
             <form class="form form_inline Section-header-form" action="#" method="post">
               <div class="form-group">
-                <label class="form-label">с
+                <label class="form-label" th:text="#{news.from}">с
                 </label>
                 <input class="form-input form-input_date form-input_date_uninit" id="fromdaterecent" name="fromdaterecent" type="text" placeholder="Дата" data-refreshoffset="20" data-refreshlimit="20" data-refreshshow="changedate" data-refreshfrom="0" autocomplete="off"/>
               </div>
               <div class="form-group">
-                <label class="form-label">по
+                <label class="form-label" th:text="#{news.to}">по
                 </label>
                 <input class="form-input form-input_date form-input_date_uninit" id="enddaterecent" name="enddaterecent" type="text" placeholder="Дата" data-refreshoffset="20" data-refreshlimit="20" data-refreshshow="changedate" data-refreshto="0" autocomplete="off"/>
               </div>
@@ -83,7 +94,7 @@
             </div>
             <div class="Card">
               <div class="Card-picture"><a href="#"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
-                <div class="Card-sale">30% скидка
+                <div class="Card-sale" th:text="#{price.discount}">30% скидка
                 </div>
               </div>
               <div class="Card-content">
@@ -109,7 +120,7 @@
             </div>
             <div class="Card">
               <div class="Card-picture"><a href="#"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
-                <div class="Card-sale">30% скидка
+                <div class="Card-sale"  th:text="#{price.discount}">30% скидка
                 </div>
                 <div class="Card-ribbon"><span class="Card-ribbonText">Бестселлер</span>
                 </div><a class="Card-status" title="Куплена"><img src="/assets/img/icons/check.svg" alt="check.svg"/></a>
@@ -211,7 +222,7 @@
             </div>
             <div class="Card">
               <div class="Card-picture"><a href="#"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
-                <div class="Card-sale">30% скидка
+                <div class="Card-sale"  th:text="#{price.discount}">30% скидка
                 </div>
               </div>
               <div class="Card-content">
@@ -237,7 +248,7 @@
             </div>
             <div class="Card">
               <div class="Card-picture"><a href="#"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
-                <div class="Card-sale">30% скидка
+                <div class="Card-sale"  th:text="#{price.discount}">30% скидка
                 </div>
                 <div class="Card-ribbon"><span class="Card-ribbonText">Бестселлер</span>
                 </div><a class="Card-status" title="Куплена"><img src="/assets/img/icons/check.svg" alt="check.svg"/></a>
@@ -325,7 +336,7 @@
                 </div>
               </div>
             </div>
-            <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#" data-refreshshow="recent" data-refreshoffset="20" data-refreshlimit="20">Показать еще</a>
+            <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#" data-refreshshow="recent" data-refreshoffset="20" data-refreshlimit="20" th:text="#{news.more}">Показать еще</a>
             </div>
           </div>
         </div>
