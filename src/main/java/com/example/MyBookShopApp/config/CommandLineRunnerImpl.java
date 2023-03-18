@@ -28,12 +28,69 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         for (int i = 0; i < 5; i++) {
             createTestEntity(new TestEntity());
         }
+
         TestEntity readTestEntity = readTestEntityById(3L);
         if(readTestEntity != null){
-            Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info(readTestEntity.toString());
+            Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info("read " + readTestEntity.toString());
         }else {
             throw new NullPointerException();
         }
+
+        TestEntity updatedTestEntity = updateTestEntity(5L);
+        if(updatedTestEntity != null){
+            Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info("update"+updatedTestEntity.toString());
+        }else {
+            throw new NullPointerException();
+        }
+
+        deleteTestEntityById(4L);
+    }
+
+    private void deleteTestEntityById(Long id)
+    {
+        Session session = entityManagerFactory.createEntityManager().unwrap(Session.class);
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            TestEntity findEntity = readTestEntityById(id);
+            TestEntity mergedTestEntity = (TestEntity) session.merge(findEntity);
+            session.remove(mergedTestEntity);
+            tx.commit();
+        } catch (HibernateException hex) {
+            if (tx != null) {
+                tx.rollback();
+            } else {
+                hex.printStackTrace();
+            }
+        } finally {
+            session.close();
+        }
+
+    }
+
+    private TestEntity updateTestEntity(Long id) {
+        Session session = entityManagerFactory.createEntityManager().unwrap(Session.class);
+        Transaction tx = null;
+        TestEntity result = null;
+
+        try {
+            tx = session.beginTransaction();
+            TestEntity findEntity = readTestEntityById(id);
+            findEntity.setData("NEW DATA UPDATE");
+            result = (TestEntity) session.merge(findEntity);
+            tx.commit();
+        } catch (HibernateException hex) {
+            if (tx != null) {
+                tx.rollback();
+            } else {
+                hex.printStackTrace();
+            }
+        } finally {
+            session.close();
+        }
+
+        return result;
     }
 
     private TestEntity readTestEntityById(Long id) {
