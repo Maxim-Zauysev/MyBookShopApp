@@ -1,38 +1,69 @@
 package com.example.MyBookShopApp.data;
 
 
+import com.example.MyBookShopApp.data.Author;
+import com.example.MyBookShopApp.data.book.links.Book2AuthorEntity;
 import jakarta.persistence.*;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
 public class Book {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private Author author;
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
+    private Long id;
+    @Column(name = "pub_date", columnDefinition = "DATE NOT NULL")
+    private Date pubDate;
+    @Column(name = "is_bestseller", columnDefinition = "SMALLINT NOT NULL")
+    private Integer isBestseller;
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String slug;
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String title;
-    private String priceOld;
-    private String price;
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String image;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    @Column(name = "price", columnDefinition = "INT NOT NULL", nullable = false)
+    private Integer price;
+    @Column(name = "discount", columnDefinition = "SMALLINT NOT NULL DEFAULT 0", nullable = false)
+    private Integer discount;
 
-    public Integer getId() {
+    public Book() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getPubDate() {
+        return pubDate;
+    }
+
+    public void setPubDate(Date pubDate) {
+        this.pubDate = pubDate;
+    }
+
+    public Integer getIsBestseller() {
+        return isBestseller;
+    }
+
+    public void setIsBestseller(Integer isBestseller) {
+        this.isBestseller = isBestseller;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getTitle() {
@@ -43,30 +74,35 @@ public class Book {
         this.title = title;
     }
 
-    public String getPriceOld() {
-        return priceOld;
+    public String getImage() {
+        return image;
     }
 
-    public void setPriceOld(String priceOld) {
-        this.priceOld = priceOld;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getPrice() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", author=" + author +
-                ", title='" + title + '\'' +
-                ", priceOld='" + priceOld + '\'' +
-                ", price='" + price + '\'' +
-                '}';
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 }

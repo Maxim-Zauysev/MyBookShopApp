@@ -1,6 +1,8 @@
 package com.example.MyBookShopApp.data;
 
+import com.example.MyBookShopApp.data.book.links.Book2AuthorEntity;
 import jakarta.persistence.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,53 +12,56 @@ import java.util.List;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    @OneToMany(mappedBy = "author")
-    private List<Book> bookList = new ArrayList<>();
-    public List<Book> getBooks() {
-        return bookList;
-    }
-
-    public void setBooks(List<Book> bookList) {
-        this.bookList = bookList;
-    }
-
-    @Override
-    public String toString() {
-        return firstName + ' ' + lastName;
-    }
-
-    public Author(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    private Long id;
+    @Column(name = "photo", columnDefinition = "VARCHAR(255)")
+    private String photo;
+    @Column(name = "slug", columnDefinition = "VARCHAR(255) NOT NULL")
+    private String slug;
+    @Column(name = "name", columnDefinition = "VARCHAR(255) NOT NULL")
+    private String name;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
     public Author() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
