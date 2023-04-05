@@ -1,7 +1,12 @@
 package com.example.MyBookShopApp.data;
 
 import com.example.MyBookShopApp.data.book.links.Book2AuthorEntity;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.*;
+
 
 
 import java.util.ArrayList;
@@ -9,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "authors")
+@ApiModel(description = "data model of author entity")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +27,10 @@ public class Author {
     private String name;
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+    @OneToMany(mappedBy = "author")
+    private List<Book> bookList = new ArrayList<>();
 
-    public Author() {
-    }
+
 
     public Long getId() {
         return id;
@@ -64,4 +71,18 @@ public class Author {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
+    }
+
+    @Override
+    public String toString() {
+        return   name;
+    }
+
 }

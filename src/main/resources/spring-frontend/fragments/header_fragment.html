@@ -12,8 +12,11 @@
                     </div>
                     <div class="Header-search">
                         <div class="search">
-                            <form class="form form_search" action="#" method="post" data-searchlimit="20">
-                                <input class="search-input" id="query" name="query" type="text" placeholder="Search over 30 million book titles" th:placeholder="#{topbar.placeholder}" value=""/>
+                            <form class="form form_search" action="#" method="post" data-searchlimit="5"
+                            th:object="${searchWordDto}">
+                                <input class="search-input" id="query" name="query" type="text"
+                                       placeholder="Search over 30 million book titles" th:placeholder="#{topbar.placeholder}"
+                                       th:field="*{example}" value=""/>
                                 <button class="search-button" type="submit" name="search" id="search"  th:text="#{topbar.search}">Поиск
                                 </button>
                             </form>
@@ -47,8 +50,9 @@
                     </li>
                     <li class="menu-item"><a class="menu-link" href="/books/recent.html"  th:href="@{/books/recent}"  th:text="#{topbar.news}" >Новинки</a>
                     </li>
-                    <li class="menu-item" th:class="${popular}"><a class="menu-link" th:href="@{/books/popular}"  th:text="#{topbar.popular}"
-                                                                   href="/books/popular.html">Популярное</a>
+<!--                    th:class="${popular}"-->
+<!--                                      |-->
+                    <li class="menu-item"   ><a class="menu-link" href="/books/popular.html"  th:href="@{/books/popular}"  th:text="#{topbar.popular}" >Популярное</a>
                     </li>
                     <li class="menu-item"><a class="menu-link" href="/authors/index.html" th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a>
                     </li>

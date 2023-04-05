@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data.genre;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "genre")

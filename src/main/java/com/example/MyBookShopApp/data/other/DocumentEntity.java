@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data.other;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 
 
 @Entity

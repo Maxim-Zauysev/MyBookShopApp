@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data;
 import com.example.MyBookShopApp.data.book.file.BookFileTypeEntity;
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "book_file")

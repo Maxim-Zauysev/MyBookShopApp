@@ -3,7 +3,8 @@ package com.example.MyBookShopApp.data.user;
 
 
 import com.example.MyBookShopApp.data.enums.ContactType;
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity

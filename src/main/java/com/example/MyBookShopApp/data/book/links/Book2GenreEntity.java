@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data.book.links;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 
 
 @Entity
