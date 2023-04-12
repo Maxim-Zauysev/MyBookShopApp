@@ -1,8 +1,7 @@
 package com.example.MyBookShopApp.data;
 
 
-import com.example.MyBookShopApp.data.Author;
-import com.example.MyBookShopApp.data.book.links.Book2AuthorEntity;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -11,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.*;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class Book {
 
     @Column(name = "pub_date", columnDefinition = "DATE NOT NULL")
     @ApiModelProperty("date of book publication")
+
     private Date pubDate;
 
     @Column(name = "is_bestseller", columnDefinition = "SMALLINT NOT NULL")
@@ -57,11 +58,77 @@ public class Book {
     @JsonProperty("discount")
     @ApiModelProperty("discount value for book")
     private Double price;
+
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @JsonIgnore
     private Author author;
 
+    //количество в отложенном
+    @Column(name = "count_kept")
+    private Integer countKept;
+
+    //количество в корзине
+    @Column(name = "count_cart")
+    private Integer countCart;
+
+    //количество купленных
+    @Column(name = "count_paid")
+    private Integer countPaid;
+
+    @JsonProperty
+    public Integer discountPrice(){
+        Integer discountedPrice = priceOld - Math.toIntExact(Math.round(priceOld*price));
+        return discountedPrice;
+    }
+    @JsonGetter("authors")
+    public String authorsFullName(){
+        return author.toString();
+    }
+
+    @JsonGetter("pub")
+    public String pub(){
+        return new SimpleDateFormat("yyyy/MM/dd").format(pubDate);
+    }
+
+    @ManyToMany(mappedBy = "books")
+    @JsonIgnore
+    private List<TagEntity> tags;
+
+    public Integer getCountKept() {
+        return countKept;
+    }
+
+    public void setCountKept(Integer countKept) {
+        this.countKept = countKept;
+    }
+
+    public Integer getCountCart() {
+        return countCart;
+    }
+
+    public void setCountCart(Integer countCart) {
+        this.countCart = countCart;
+    }
+
+    public Integer getCountPaid() {
+        return countPaid;
+    }
+
+    public void setCountPaid(Integer countPaid) {
+        this.countPaid = countPaid;
+    }
+
+    public List<TagEntity> getTagEntityList() {
+        return tags;
+    }
+
+    public void setTagEntityList(List<TagEntity> tagEntityEntityList) {
+        this.tags = tagEntityEntityList;
+    }
+
+    public Book() {
+    }
 
     public Author getAuthor() {
         return author;
@@ -69,9 +136,6 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
-    }
-
-    public Book() {
     }
 
     public Long getId() {

@@ -6,18 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Pattern;
 
 @Service
 public class BookService {
 
+    private final DateFormat oldDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private final DateFormat newDateFormat = new SimpleDateFormat("yyyy/MM/dd");
     private BookRepository bookRepository;
-
 
     @Autowired
     public BookService(BookRepository bookRepository) {
@@ -52,7 +56,7 @@ public class BookService {
         return bookRepository.getBestsellers();
     }
 
-    public Page<Book> getPageofRecommendedBooks(Integer offset, Integer limit){
+    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findAll(nextPage);
     }
@@ -60,6 +64,36 @@ public class BookService {
     public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findBookByTitleContaining(searchWord,nextPage);
+    }
+
+    public List<Book> getPageOfPopularBook(Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+
+        return bookRepository.getPopularityBooks(nextPage);
+    }
+
+    public List<Book> getRecentBooks(Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
+        return bookRepository.findAll(nextPage).getContent();
+    }
+
+    public List<Book> getPageOfRecentBooksByDate(String from, String to, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
+        Date fromDate = new Date();
+        Date toDate = new Date();
+        try {
+                fromDate = oldDateFormat.parse(from);
+                toDate = oldDateFormat.parse(to);
+                String newDateFrom = newDateFormat.format(fromDate);
+                String newDateTo = newDateFormat.format(toDate);
+                fromDate = newDateFormat.parse(newDateFrom);
+                toDate = newDateFormat.parse(newDateTo);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return bookRepository.findBooksByPubDateBetween(fromDate, toDate, nextPage);
     }
 }
 

@@ -4,7 +4,9 @@ import com.example.MyBookShopApp.data.Book;
 
 import com.example.MyBookShopApp.data.BooksPageDto;
 import com.example.MyBookShopApp.data.SearchWordDto;
+import com.example.MyBookShopApp.data.TagEntity;
 import com.example.MyBookShopApp.services.BookService;
+import com.example.MyBookShopApp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,20 +19,37 @@ import java.util.List;
 public class MainPageController {
 
     private final BookService bookService;
+    private final TagService tagService;
 
     @Autowired
-    public MainPageController(BookService bookService) {
+    public MainPageController(BookService bookService, TagService tagService) {
         this.bookService = bookService;
+        this.tagService = tagService;
     }
 
     @ModelAttribute("recommendedBooks")
     public List<Book> recommendedBooks() {
-        return bookService.getPageofRecommendedBooks(0, 6).getContent();
+        return bookService.getPageOfRecommendedBooks(0, 6).getContent();
+    }
+
+    @ModelAttribute("popularBooks")
+    public List<Book> bookList() {
+        return bookService.getPageOfPopularBook(0, 6);
+    }
+
+    @ModelAttribute("recentBooks")
+    public List<Book> getRecentBooks() {
+        return bookService.getRecentBooks(0, 6);
+    }
+
+    @ModelAttribute("tags")
+    public List<TagEntity> getTags() {
+        return tagService.getAllTags();
     }
 
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
+            return new SearchWordDto();
     }
 
     @ModelAttribute("searchResults")
@@ -43,27 +62,11 @@ public class MainPageController {
         return "index";
     }
 
+
     @GetMapping("/books/recommended")
     @ResponseBody
     public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageofRecommendedBooks(offset, limit).getContent());
-    }
-
-    @GetMapping(value = {"/search", "/search/{searchWord}"})
-    public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                  Model model) {
-        model.addAttribute("searchWordDto", searchWordDto);
-        model.addAttribute("searchResults",
-                bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
-        return "/search/index";
-    }
-
-    @GetMapping("/search/page/{searchWord}")
-    @ResponseBody
-    public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
-                                          @RequestParam("limit") Integer limit,
-                                          @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
-        return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
+        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
 }
