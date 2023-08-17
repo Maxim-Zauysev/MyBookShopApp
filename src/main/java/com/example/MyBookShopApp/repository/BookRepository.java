@@ -34,9 +34,7 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
-    @Query(value = "SELECT books.count_paid+0.7*books.count_cart+0.4*books.count_kept as popularity," +
-            "* FROM books " +
-            "ORDER BY popularity",nativeQuery = true)
+    @Query(value = "SELECT books.count_paid+0.7*books.count_cart+0.4*books.count_kept as popularity, * FROM books ORDER BY popularity",nativeQuery = true)
     List<Book> getPopularityBooks(Pageable pageable);
 
     List<Book> findBooksByPubDateBetween(Date from, Date to, Pageable nextPage);

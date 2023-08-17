@@ -47,12 +47,12 @@
         <ul class="breadcrumbs">
           <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
           </li>
-          <li class="breadcrumbs-item breadcrumbs-item_current"><span>Психологическая проза</span>
+          <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${tagName}"><span>Психологическая проза</span>
           </li>
         </ul>
         <div class="Section">
           <div class="Section-header">
-            <h1 class="Section-title">Психологическая проза
+            <h1 class="Section-title" th:text="${tagName}">Психологическая проза
             </h1>
             <div class="Section-header-links"><a class="Section-header-link" href="/index.html#tags" >Все тэги</a>
             </div>

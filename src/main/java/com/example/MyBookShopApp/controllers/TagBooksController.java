@@ -4,6 +4,7 @@ import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.BooksPageDto;
 import com.example.MyBookShopApp.data.SearchWordDto;
 import com.example.MyBookShopApp.services.TagService;
+import liquibase.pro.packaged.S;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,13 @@ public class TagBooksController {
     @ModelAttribute("searchResults")
     public List<Book> searchResult() {
         return new ArrayList<>();
+    }
+
+
+
+    @ModelAttribute("tagName")
+    public String getTagName(@PathVariable Integer tagId) {
+        return tagService.getTagNameById(tagId);
     }
 
     @GetMapping("/tags/{tagId}")

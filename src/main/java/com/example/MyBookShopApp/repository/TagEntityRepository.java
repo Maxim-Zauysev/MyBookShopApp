@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TagEntityRepository extends JpaRepository<TagEntity, Integer> {
+
     TagEntity findTagEntityById(Integer id);
 
 }

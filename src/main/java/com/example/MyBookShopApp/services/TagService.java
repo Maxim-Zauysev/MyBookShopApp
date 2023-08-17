@@ -32,4 +32,8 @@ public class TagService {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.getBooksByTag(tagId, nextPage);
     }
+
+    public String getTagNameById(Integer tagId){
+        return tagRepository.findTagEntityById(tagId).getName();
+    }
 }

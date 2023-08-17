@@ -17,11 +17,14 @@ import java.util.List;
 
 @Controller
 public class PopularPageController {
+
     private final BookService bookService;
+
     @Autowired
     public PopularPageController(BookService bookService) {
         this.bookService = bookService;
     }
+
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
         return new SearchWordDto();
@@ -36,6 +39,7 @@ public class PopularPageController {
     public List<Book> bookList(){
         return bookService.getPageOfPopularBook(0,10);
     }
+
     @GetMapping(value = "/books/popular", produces = MediaType.TEXT_HTML_VALUE)
     public String popularPage() {
         return "/books/popular";
