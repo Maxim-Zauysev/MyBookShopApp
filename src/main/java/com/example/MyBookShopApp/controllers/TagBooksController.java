@@ -38,9 +38,11 @@ public class TagBooksController {
         return tagService.getTagNameById(tagId);
     }
 
-    @GetMapping("/tags/{tagId}")
+    @GetMapping("/books/tags/{tagId}")
     public String getPageWithBooksByTag(@PathVariable Integer tagId, Model model) {
         model.addAttribute("booksByTag", tagService.getBooksByTag(tagId, 0, 10).getContent());
+        model.addAttribute("tagId",tagId);
+
         return "/tags/index";
     }
 

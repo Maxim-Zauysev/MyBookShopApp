@@ -1,6 +1,10 @@
 package com.example.MyBookShopApp.data.genre;
 
+import com.example.MyBookShopApp.data.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -14,11 +18,23 @@ public class GenreEntity {
     @Column(columnDefinition = "INT")
     private int parentId;
 
+
+
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book2genre",
+            joinColumns = @JoinColumn(name = "genre_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    @JsonIgnore
+    private List<Book> books;
+
 
     public int getId() {
         return id;
@@ -51,4 +67,5 @@ public class GenreEntity {
     public void setName(String name) {
         this.name = name;
     }
+
 }

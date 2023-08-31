@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data;
 
 
+import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +27,6 @@ public class Book {
 
     @Column(name = "pub_date", columnDefinition = "DATE NOT NULL")
     @ApiModelProperty("date of book publication")
-
     private Date pubDate;
 
     @Column(name = "is_bestseller", columnDefinition = "SMALLINT NOT NULL")
@@ -94,6 +95,11 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     @JsonIgnore
     private List<TagEntity> tags;
+
+    @ManyToMany(mappedBy = "books")
+    @JsonIgnore
+    private List<GenreEntity> genres;
+
 
     public Integer getCountKept() {
         return countKept;
