@@ -1,4 +1,4 @@
-insert into genre (id, name, parent_id, slug) values (1, 'Лёгкое чтение', 0, 'genre-cuf-685');
+insert into genre (id, name, parent_id, slug) values (1, 'Лёгкое чтение', null, 'genre-cuf-685');
 insert into genre (id, name, parent_id, slug) values (2, 'Фантастика', 1, 'genre-vlw-283');
 insert into genre (id, name, parent_id, slug) values (3, 'Боевики', 1, 'genre-myl-873');
 insert into genre (id, name, parent_id, slug) values (4, 'Детективы', 1, 'genre-eyt-479');
@@ -14,9 +14,9 @@ insert into genre (id, name, parent_id, slug) values (13, 'Фэнтези', 1, 'genre-b
 insert into genre (id, name, parent_id, slug) values (14, 'Романы', 1, 'genre-quq-763');
 insert into genre (id, name, parent_id, slug) values (15, 'Ужасы', 1, 'genre-lng-985');
 insert into genre (id, name, parent_id, slug) values (16, 'Приключения', 1, 'genre-tmp-136');
-insert into genre (id, name, parent_id, slug) values (17, 'Серьёзное чтение', 0, 'genre-udi-629');
+insert into genre (id, name, parent_id, slug) values (17, 'Серьёзное чтение', null, 'genre-udi-629');
 insert into genre (id, name, parent_id, slug) values (18, 'Биографии', 17, 'genre-cgo-052');
-insert into genre (id, name, parent_id, slug) values (19, 'Деловая литература', 0, 'genre-dms-719');
+insert into genre (id, name, parent_id, slug) values (19, 'Деловая литература', null, 'genre-dms-719');
 insert into genre (id, name, parent_id, slug) values (20, 'Управление экономикой', 19, 'genre-wtv-899');
 insert into genre (id, name, parent_id, slug) values (21, 'Карьера', 19, 'genre-neg-751');
 insert into genre (id, name, parent_id, slug) values (22, 'Маркетинг', 19, 'genre-rtm-791');
@@ -56,7 +56,7 @@ insert into genre (id, name, parent_id, slug) values (55, 'Финансовый менеджмент
 insert into genre (id, name, parent_id, slug) values (56, 'Управление персоналом', 19, 'genre-gbf-408');
 insert into genre (id, name, parent_id, slug) values (57, 'Бизнес-процессы', 19, 'genre-hhs-844');
 insert into genre (id, name, parent_id, slug) values (58, 'Управление бизнесом', 19, 'genre-hcu-294');
-insert into genre (id, name, parent_id, slug) values (59, 'Драматургия', 0, 'genre-syl-399');
+insert into genre (id, name, parent_id, slug) values (59, 'Драматургия', null, 'genre-syl-399');
 insert into genre (id, name, parent_id, slug) values (60, 'Античная драма', 59, 'genre-hxu-231');
 insert into genre (id, name, parent_id, slug) values (61, 'Комедия', 59, 'genre-nex-076');
 insert into genre (id, name, parent_id, slug) values (62, 'Сценарий', 59, 'genre-xrq-997');

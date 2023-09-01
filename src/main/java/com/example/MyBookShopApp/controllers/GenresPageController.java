@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GenresPageController {
@@ -22,11 +24,18 @@ public class GenresPageController {
         this.genreService = genreService;
     }
 
+    @ModelAttribute("parents")
+    public List<GenreEntity> parentsAttribute(){
+        return genreService.getAllParents();
+    }
+
     @GetMapping("/genres")
-    public String genresPage() {
-        genreService.getAllBooks();
+    public String genresPage(Model model) {
+        Map<GenreEntity, List<GenreEntity>> genreMap = genreService.getGenreMap();
+        model.addAttribute("genreMap", genreMap);
         return "/genres/index";
     }
+
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
         return new SearchWordDto();

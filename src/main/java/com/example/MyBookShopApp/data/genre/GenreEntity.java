@@ -15,10 +15,12 @@ public class GenreEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "INT")
-    private int parentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private GenreEntity parentId;
 
-
+    @OneToMany(mappedBy = "parentId", fetch = FetchType.LAZY)
+    private List<GenreEntity> subgenres;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
@@ -35,6 +37,29 @@ public class GenreEntity {
     @JsonIgnore
     private List<Book> books;
 
+    public GenreEntity getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(GenreEntity parentId) {
+        this.parentId = parentId;
+    }
+
+    public List<GenreEntity> getSubgenres() {
+        return subgenres;
+    }
+
+    public void setSubgenres(List<GenreEntity> subgenres) {
+        this.subgenres = subgenres;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 
     public int getId() {
         return id;
@@ -44,13 +69,13 @@ public class GenreEntity {
         this.id = id;
     }
 
-    public int getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
+//    public int getParentId() {
+//        return parentId;
+//    }
+//
+//    public void setParentId(int parentId) {
+//        this.parentId = parentId;
+//    }
 
     public String getSlug() {
         return slug;
