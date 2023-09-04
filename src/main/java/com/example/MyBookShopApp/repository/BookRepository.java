@@ -42,6 +42,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     @Query(value = "select * from books b join book2tag bt on b.id=bt.book_id join tags t on bt.tag_id=t.id where t.id=:tagId", nativeQuery = true)
     Page<Book> getBooksByTag(Integer tagId, Pageable nextPage);
 
-    @Query(nativeQuery = true, value = "select * from books b join book2genre bt on b.id=bt.book_id join genre t on bt.genre_id =t.id where t.id=:genreId")
-    Page<Book> getBooksByGenre(Integer genreId, Pageable nextPage);
+    @Query(nativeQuery = true, value = "select * from books b join book2genre bt on b.id=bt.book_id join genre g on bt.genre_id =g.id where g.slug=:slug")
+    Page<Book> getBooksByGenreSlug(String slug, Pageable nextPage);
+
+
 }

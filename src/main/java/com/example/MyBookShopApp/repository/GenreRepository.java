@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface GenreRepository extends JpaRepository<GenreEntity,Integer>
 {
-   GenreEntity findGenreEntityById(Integer id);
+   @Query(nativeQuery = true, value = "SELECT * FROM genre WHERE slug = :slug")
+   GenreEntity findGenreEntityBySlug(String slug);
+
    List<GenreEntity> findAllByParentId(Integer parentId);
 
    //получить поджанры жанра

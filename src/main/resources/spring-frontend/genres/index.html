@@ -66,13 +66,13 @@ p.error-browser
             <th:block  th:each="subgenre : ${entry.value}">
                 <div class="Tags" th:if="${subgenre.subgenres.size() != 0}" >
                   <div class="Tags-title">
-                    <div class="Tag"><a href="/genres/slug.html" th:href="@{'/genres/' + ${subgenre.slug}}" th:utext="${subgenre.name}">Детективы<span class="undefined-amount">(10)</span></a>
+                    <div class="Tag"><a href="/genres/slug.html" th:href="@{'/genres/' + ${subgenre.slug}}" th:text="${subgenre.name}">Детективы<span class="undefined-amount">(10)</span></a>
                     </div>
                   </div>
-                  <div class="Tag" th:each="subsubgenre : ${subgenre.subgenres}"><a href="/genres/slug.html" th:href="@{'/genres/' + ${subsubgenre.slug}}" th:utext="${subsubgenre.name}">Триллер<span class="undefined-amount">(134)</span></a>
+                  <div class="Tag" th:each="subsubgenre : ${subgenre.subgenres}"><a href="/genres/slug.html" th:href="@{'/genres/' + ${subsubgenre.slug}}" th:text="${subsubgenre.name}">Триллер<span class="undefined-amount">(134)</span></a>
                   </div>
                 </div>
-                <div class="Tag" th:if="${subgenre.subgenres.size() == 0}"  ><a href="/genres/slug.html" th:href="@{'/genres/' + ${subgenre.slug}}" th:utext="${subgenre.name}">Боевики<span class="undefined-amount">(158)</span></a>
+                <div class="Tag" th:if="${subgenre.subgenres.size() == 0}"  ><a href="/genres/slug.html" th:href="@{'/genres/' + ${subgenre.slug}}" th:text="${subgenre.name}">Боевики<span class="undefined-amount">(158)</span></a>
                 </div>
             </th:block>
           </div>

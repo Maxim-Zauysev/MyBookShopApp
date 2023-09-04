@@ -6,6 +6,7 @@ import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,20 @@ public class GenreService {
         this.bookRepository = bookRepository;
     }
 
-
+    public List<GenreEntity> getSubgenresPyParentGenre(GenreEntity parent){
+        return genreRepository.findSubgenresByParentId(parent.getId());
+    }
+    public  GenreEntity getGenreBySlug(String slug){
+        return genreRepository.findGenreEntityBySlug(slug);
+    }
     //Все родители 
     public List<GenreEntity> getAllParents(){
         return genreRepository.findAllByParentId(null);
+    }
+
+    public Page<Book> getBooksByGenreSlug(String slug, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.getBooksByGenreSlug(slug, nextPage);
     }
 
     public Map<GenreEntity, List<GenreEntity>> getGenreMap() {
@@ -42,14 +53,4 @@ public class GenreService {
         }
         return genreMap;
     }
-
-    public Page<Book> getBooksByGenreSlug(Integer genreId, Integer offset, Integer limit) {
-        List<Book> books = new ArrayList<>();
-
-
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBooksByGenre(genreId, nextPage);
-    }
-
-
 }
