@@ -1,6 +1,9 @@
 package com.example.MyBookShopApp.data.book.links;
 
+import com.example.MyBookShopApp.data.user.UserEntity;
+
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -16,6 +19,9 @@ public class Book2UserTypeEntity {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    @OneToMany(mappedBy = "userType")
+    private List<Book2UserEntity> bookUsers ;
 
     public int getId() {
         return id;

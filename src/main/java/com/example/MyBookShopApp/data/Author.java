@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "authors")
+@Table(name = "author")
 @ApiModel(description = "data model of author entity")
 public class Author {
     @Id
@@ -27,10 +27,23 @@ public class Author {
     private String name;
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-    @OneToMany(mappedBy = "author")
-    private List<Book> bookList = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "book2author",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    @JsonIgnore
+    private List<Book> books;
 
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 
     public Long getId() {
         return id;
@@ -70,14 +83,6 @@ public class Author {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Book> getBookList() {
-        return bookList;
-    }
-
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
     }
 
     @Override

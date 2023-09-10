@@ -13,11 +13,16 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book,Long> {
 
-    List<Book> findBooksByAuthor_Name(String name);
+    Book findBooksById(Integer id);
 
     @Query("from Book")
     List<Book> customFindAllBooks();
 
+    @Query(nativeQuery = true, value = "SELECT books.*\n" +
+            "FROM books\n" +
+            "INNER JOIN book2author ON books.id = book2author.book_id\n" +
+            "INNER JOIN author ON book2author.author_id = author.id\n" +
+            "WHERE author.name=:authorsName")
     List<Book> findBooksByAuthorNameContaining(String authorsName);
 
     List<Book> findBooksByTitleContaining(String bookTitle);

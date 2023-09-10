@@ -1,9 +1,12 @@
 package com.example.MyBookShopApp.data.user;
 
+import com.example.MyBookShopApp.data.book.links.Book2UserEntity;
+
 import javax.persistence.*;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -24,6 +27,9 @@ public class UserEntity {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    @OneToMany(mappedBy = "user")
+    private List<Book2UserEntity> bookUsers ;
 
     public int getId() {
         return id;

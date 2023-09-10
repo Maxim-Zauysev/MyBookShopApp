@@ -1,7 +1,9 @@
 package com.example.MyBookShopApp.data;
 
 
+import com.example.MyBookShopApp.data.book.links.Book2UserEntity;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -60,37 +63,6 @@ public class Book {
     @ApiModelProperty("discount value for book")
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    @JsonIgnore
-    private Author author;
-
-    //количество в отложенном
-    @Column(name = "count_kept")
-    private Integer countKept;
-
-    //количество в корзине
-    @Column(name = "count_cart")
-    private Integer countCart;
-
-    //количество купленных
-    @Column(name = "count_paid")
-    private Integer countPaid;
-
-    @JsonProperty
-    public Integer discountPrice(){
-        Integer discountedPrice = priceOld - Math.toIntExact(Math.round(priceOld*price));
-        return discountedPrice;
-    }
-    @JsonGetter("authors")
-    public String authorsFullName(){
-        return author.toString();
-    }
-
-    @JsonGetter("pub")
-    public String pub(){
-        return new SimpleDateFormat("yyyy/MM/dd").format(pubDate);
-    }
 
     @ManyToMany(mappedBy = "books")
     @JsonIgnore
@@ -100,29 +72,29 @@ public class Book {
     @JsonIgnore
     private List<GenreEntity> genres;
 
+    @ManyToMany(mappedBy = "books")
+    @JsonIgnore
+    private List<Author> authors ;
 
-    public Integer getCountKept() {
-        return countKept;
+    @OneToMany(mappedBy = "book")
+    private List<Book2UserEntity> bookUsers;
+
+    @JsonProperty
+    public Integer discountPrice(){
+        Integer discountedPrice = priceOld - Math.toIntExact(Math.round(priceOld*price));
+        return discountedPrice;
     }
 
-    public void setCountKept(Integer countKept) {
-        this.countKept = countKept;
+    @JsonGetter("authors")
+    public String authorsFullName(){
+        return authors.stream()
+                .map(Author::getName)
+                .collect(Collectors.joining("\n"));
     }
 
-    public Integer getCountCart() {
-        return countCart;
-    }
-
-    public void setCountCart(Integer countCart) {
-        this.countCart = countCart;
-    }
-
-    public Integer getCountPaid() {
-        return countPaid;
-    }
-
-    public void setCountPaid(Integer countPaid) {
-        this.countPaid = countPaid;
+    @JsonGetter("pub")
+    public String pub(){
+        return new SimpleDateFormat("yyyy/MM/dd").format(pubDate);
     }
 
     public List<TagEntity> getTagEntityList() {
@@ -136,12 +108,28 @@ public class Book {
     public Book() {
     }
 
-    public Author getAuthor() {
-        return author;
+    public List<TagEntity> getTags() {
+        return tags;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setTags(List<TagEntity> tags) {
+        this.tags = tags;
+    }
+
+    public List<GenreEntity> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<GenreEntity> genres) {
+        this.genres = genres;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public Long getId() {

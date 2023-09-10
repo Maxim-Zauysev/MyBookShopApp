@@ -32,10 +32,10 @@ public class MainPageController {
         return bookService.getPageOfRecommendedBooks(0, 6).getContent();
     }
 
-    @ModelAttribute("popularBooks")
-    public List<Book> bookList() {
-        return bookService.getPageOfPopularBook(0, 6);
-    }
+//    @ModelAttribute("popularBooks")
+//    public List<Book> bookList() {
+//        return bookService.getPageOfPopularBook(0, 6);
+//    }
 
     @ModelAttribute("recentBooks")
     public List<Book> getRecentBooks() {

@@ -1,11 +1,14 @@
 package com.example.MyBookShopApp.data.book.links;
 
 
+import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.user.UserEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "book2user")
+@Table(name = "book2user.sql")
 public class Book2UserEntity {
 
     @Id
@@ -15,14 +18,17 @@ public class Book2UserEntity {
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDateTime time;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int typeId;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int bookId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Book2UserTypeEntity userType;
 
     public int getId() {
         return id;
@@ -40,27 +46,5 @@ public class Book2UserEntity {
         this.time = time;
     }
 
-    public int getTypeId() {
-        return typeId;
-    }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }
