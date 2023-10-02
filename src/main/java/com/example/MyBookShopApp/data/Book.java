@@ -74,7 +74,6 @@ public class Book {
     private List<GenreEntity> genres;
 
     @ManyToMany(mappedBy = "books")
-    @JsonIgnore
     private List<Author> authors ;
 
     @OneToMany(mappedBy = "book")
@@ -87,10 +86,10 @@ public class Book {
     }
 
     @JsonGetter("authors")
-    public String authorsFullName(){
+    public List<String> authorsFullName(){
         return authors.stream()
                 .map(Author::getName)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.toList());
     }
 
 
