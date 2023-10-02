@@ -15,8 +15,12 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     Book findBooksById(Integer id);
 
-    @Query("from Book")
-    List<Book> customFindAllBooks();
+    List<Book> findBooksByTitleContaining(String bookTitle);
+
+    List<Book> findBooksByPriceOldBetween(Integer min, Integer max);
+
+    @Query("from Book where isBestseller=1")
+    List<Book> getBestsellers();
 
     @Query(nativeQuery = true, value = "SELECT books.*\n" +
             "FROM books\n" +
@@ -25,22 +29,10 @@ public interface BookRepository extends JpaRepository<Book,Long> {
             "WHERE author.name=:authorsName")
     List<Book> findBooksByAuthorNameContaining(String authorsName);
 
-    List<Book> findBooksByTitleContaining(String bookTitle);
-
-    List<Book> findBooksByPriceOldBetween(Integer min, Integer max);
-
-    List<Book> findBooksByPriceOldIs(Integer price);
-
-    @Query("from Book where isBestseller=1")
-    List<Book> getBestsellers();
-
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)",nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
-
-    @Query(value = "SELECT books.count_paid+0.7*books.count_cart+0.4*books.count_kept as popularity, * FROM books ORDER BY popularity",nativeQuery = true)
-    List<Book> getPopularityBooks(Pageable pageable);
 
     List<Book> findBooksByPubDateBetween(Date from, Date to, Pageable nextPage);
 
@@ -56,4 +48,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
             "GROUP BY b.id " +
             "ORDER BY (COUNT(bu.user.id) + 0.7 * SUM(CASE WHEN but.code = 'CART' THEN 1 ELSE 0 END) + 0.4 * SUM(CASE WHEN but.code = 'KEPT' THEN 1 ELSE 0 END)) DESC")
     Page<Book> findAllByOrderByBookPopularityDesc(Pageable nexPage);
+
+    @Query(nativeQuery = true,value = "SELECT books.* FROM books INNER JOIN book2author ON books.id = book2author.book_id INNER JOIN author ON book2author.author_id = author.id WHERE author.slug=:slug")
+    Page<Book> findBooksByAuthorSlug(String slug, Pageable nexPage);
+
 }

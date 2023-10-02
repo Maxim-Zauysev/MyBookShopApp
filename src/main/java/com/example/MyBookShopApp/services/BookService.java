@@ -68,6 +68,11 @@ public class BookService {
         return bookRepository.findAllByOrderByBookPopularityDesc(nextPage);
     }
 
+    public Page<Book> getPageBooksByAuthorSlug(String slug, Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findBooksByAuthorSlug(slug,nextPage);
+    }
+
     public List<Book> getPageOfRecentBooksByDate(String from, String to, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
         Date fromDate = new Date();

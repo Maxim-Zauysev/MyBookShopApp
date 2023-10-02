@@ -25,4 +25,8 @@ public class AuthorService {
         List<Author> authors = authorRepository.findAll();
         return authors.stream().collect(Collectors.groupingBy((Author a)->{return a.getName().substring(0,1);}));
     }
+
+    public Author getAuthorBySlug(String slug){
+        return authorRepository.findAllBySlug(slug);
+    }
 }
