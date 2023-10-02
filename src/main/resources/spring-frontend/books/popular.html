@@ -70,7 +70,7 @@
           </div>
           <div class="Cards Cards_refresh">
             <div class="Cards">
-              <div class="Card" th:each="book: ${popularList}">
+              <div class="Card" th:each="book: ${popularBooks}">
                 <div class="Card-picture">
                   <a href="#a" th:href="${book.id}">
                     <img th:src="${book.image}" alt="card.jpg"/>
@@ -80,7 +80,7 @@
                   <strong class="Card-title">
                     <a href="#" th:text="${book.title}"></a>
                   </strong>
-                  <div class="Card-description" th:text="${book.author}"></div>
+                  <div class="Card-description" th:each="author: ${book.getAuthors()}" th:text="${author.getName()}"></div>
                   <div class="Card-cost">
                     <span class="Card-priceOld" th:text="${book.priceOld+'₽'}" >₽300.00</span>
                     <span class="Card-price" th:text="${book.discountPrice()+'₽'}">₽190.00</span>

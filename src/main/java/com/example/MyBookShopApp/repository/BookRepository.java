@@ -50,5 +50,10 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     @Query(nativeQuery = true, value = "select * from books b join book2genre bt on b.id=bt.book_id join genre g on bt.genre_id =g.id where g.slug=:slug")
     Page<Book> getBooksByGenreSlug(String slug, Pageable nextPage);
 
-
+    @Query("SELECT b FROM Book b " +
+            "LEFT JOIN Book2UserEntity bu ON b.id = bu.book.id " +
+            "LEFT JOIN Book2UserTypeEntity but ON bu.userType.id = but.id " +
+            "GROUP BY b.id " +
+            "ORDER BY (COUNT(bu.user.id) + 0.7 * SUM(CASE WHEN but.code = 'CART' THEN 1 ELSE 0 END) + 0.4 * SUM(CASE WHEN but.code = 'KEPT' THEN 1 ELSE 0 END)) DESC")
+    Page<Book> findAllByOrderByBookPopularityDesc(Pageable nexPage);
 }

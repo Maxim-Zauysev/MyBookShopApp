@@ -35,20 +35,19 @@ public class PopularPageController {
         return new ArrayList<>();
     }
 
-    @ModelAttribute("popularList")
-    public List<Book> bookList(){
-        return bookService.getPageOfPopularBook(0,10);
+    @ModelAttribute("popularBooks")
+    public List<Book> popularBooks(){
+        return bookService.getPageOfPopularBooks(0,10).getContent();
     }
 
     @GetMapping(value = "/books/popular", produces = MediaType.TEXT_HTML_VALUE)
-    public String popularPage() {
+    public String popularBooksPage() {
         return "/books/popular";
     }
 
     @GetMapping(value = "/books/popular", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BooksPageDto getPopularityBooks(@RequestParam("offset") Integer offset,
-                                           @RequestParam("limit") Integer limit){
-        return new BooksPageDto(bookService.getPageOfPopularBook(offset, limit));
+    public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
     }
 }

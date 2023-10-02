@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 
@@ -37,6 +38,7 @@ public class Book {
             "bestseller")
     private Integer isBestseller;
 
+
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     @ApiModelProperty("mnemonical identity sequence of characters")
     private String slug;
@@ -62,7 +64,6 @@ public class Book {
     @JsonProperty("discount")
     @ApiModelProperty("discount value for book")
     private Double price;
-
 
     @ManyToMany(mappedBy = "books")
     @JsonIgnore
@@ -92,9 +93,19 @@ public class Book {
                 .collect(Collectors.joining("\n"));
     }
 
+
+
     @JsonGetter("pub")
     public String pub(){
         return new SimpleDateFormat("yyyy/MM/dd").format(pubDate);
+    }
+
+    public List<Book2UserEntity> getBookUsers() {
+        return bookUsers;
+    }
+
+    public void setBookUsers(List<Book2UserEntity> bookUsers) {
+        this.bookUsers = bookUsers;
     }
 
     public List<TagEntity> getTagEntityList() {
@@ -105,8 +116,6 @@ public class Book {
         this.tags = tagEntityEntityList;
     }
 
-    public Book() {
-    }
 
     public List<TagEntity> getTags() {
         return tags;

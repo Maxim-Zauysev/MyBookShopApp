@@ -28,10 +28,6 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> getBooksData() {
-        return bookRepository.findAll();
-    }
-
     public List<Book> getBooksByAuthor(String authorName){
         return bookRepository.findBooksByAuthorNameContaining(authorName);
     }
@@ -42,10 +38,6 @@ public class BookService {
 
     public List<Book> getBooksWithPriceBetween(Integer min, Integer max){
         return bookRepository.findBooksByPriceOldBetween(min, max);
-    }
-
-    public List<Book> getBooksWithPrice(Integer price){
-        return bookRepository.findBooksByPriceOldIs(price);
     }
 
     public List<Book> getBooksWithMaxPrice(){
@@ -66,15 +58,14 @@ public class BookService {
         return bookRepository.findBookByTitleContaining(searchWord,nextPage);
     }
 
-    public List<Book> getPageOfPopularBook(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-
-        return bookRepository.getPopularityBooks(nextPage);
-    }
-
     public List<Book> getRecentBooks(Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
         return bookRepository.findAll(nextPage).getContent();
+    }
+
+    public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAllByOrderByBookPopularityDesc(nextPage);
     }
 
     public List<Book> getPageOfRecentBooksByDate(String from, String to, Integer offset, Integer limit) {

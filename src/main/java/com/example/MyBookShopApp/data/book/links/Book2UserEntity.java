@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "book2user.sql")
+@Table(name = "book2user")
 public class Book2UserEntity {
 
     @Id
