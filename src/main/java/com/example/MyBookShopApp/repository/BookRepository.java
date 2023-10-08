@@ -52,4 +52,6 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     @Query(nativeQuery = true,value = "SELECT books.* FROM books INNER JOIN book2author ON books.id = book2author.book_id INNER JOIN author ON book2author.author_id = author.id WHERE author.slug=:slug")
     Page<Book> findBooksByAuthorSlug(String slug, Pageable nexPage);
 
+    Book findBookBySlug(String slug);
+
 }
