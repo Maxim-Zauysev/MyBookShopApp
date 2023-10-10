@@ -12,12 +12,29 @@ public class BookFile {
     private Long id;
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String hash;
+
     @OneToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private BookFileTypeEntity bookFileTypeId;
 
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     private String path;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id",referencedColumnName = "id")
+    private Book book;
+
+    public String getBookFileExtensionByTypeId() {
+        return bookFileTypeId.getName();
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
     public BookFile() {
     }

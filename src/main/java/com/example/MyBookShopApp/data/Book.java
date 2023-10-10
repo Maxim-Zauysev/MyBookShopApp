@@ -79,6 +79,9 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<Book2UserEntity> bookUsers;
 
+    @OneToMany(mappedBy = "book")
+    private List<BookFile> bookFileList = new ArrayList<>();
+
     @JsonProperty
     public Integer discountPrice(){
         Integer discountedPrice = priceOld - Math.toIntExact(Math.round(priceOld*price));
@@ -95,6 +98,14 @@ public class Book {
     @JsonGetter("pub")
     public String pub(){
         return new SimpleDateFormat("yyyy/MM/dd").format(pubDate);
+    }
+
+    public List<BookFile> getBookFileList() {
+        return bookFileList;
+    }
+
+    public void setBookFileList(List<BookFile> bookFileList) {
+        this.bookFileList = bookFileList;
     }
 
     public List<Book2UserEntity> getBookUsers() {

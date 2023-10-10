@@ -70,7 +70,13 @@ public class BookService {
 
     public Page<Book> getPageBooksByAuthorSlug(String slug, Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findBooksByAuthorSlug(slug,nextPage);
+        Page<Book> page = bookRepository.findBooksByAuthorSlug(slug, nextPage);
+
+        if (page.isEmpty()) {
+            return Page.empty();
+        } else {
+            return page;
+        }
     }
 
     public List<Book> getPageOfRecentBooksByDate(String from, String to, Integer offset, Integer limit) {
