@@ -11,18 +11,18 @@ import java.util.List;
 
 @Controller
 public class CartPageController {
-    @GetMapping("/cart")
-    public String cartPage() {
-        return "cart";
-    }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResults")
-    public List<Book> searchResults() {
-        return new ArrayList<>();
-    }
+//    @GetMapping("/cart")
+//    public String cartPage() {
+//        return "cart";
+//    }
+//
+//    @ModelAttribute("searchWordDto")
+//    public SearchWordDto searchWordDto() {
+//        return new SearchWordDto();
+//    }
+//
+//    @ModelAttribute("searchResults")
+//    public List<Book> searchResults() {
+//        return new ArrayList<>();
+//    }
 }
