@@ -74,12 +74,15 @@ public class Book {
     private List<GenreEntity> genres;
 
     @ManyToMany(mappedBy = "books")
+    @JsonIgnore
     private List<Author> authors ;
 
     @OneToMany(mappedBy = "book")
+    @JsonIgnore
     private List<Book2UserEntity> bookUsers;
 
     @OneToMany(mappedBy = "book")
+    @JsonIgnore
     private List<BookFile> bookFileList = new ArrayList<>();
 
     @JsonProperty

@@ -15,7 +15,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     Book findBooksById(Integer id);
 
-    List<Book> findBooksByTitleContaining(String bookTitle);
+
+    List<Book> findBookByTitleContaining(String bookTitle);
 
     List<Book> findBooksByPriceOldBetween(Integer min, Integer max);
 
