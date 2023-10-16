@@ -107,6 +107,10 @@ public class BookService {
 
         return bookRepository.findBooksByPubDateBetween(fromDate, toDate, nextPage);
     }
+
+    public Integer getRatingCountByBookId(Long rating, Long bookId){
+        return bookRepository.getRatingCountByBookId(rating,bookId);
+    }
 }
 
 

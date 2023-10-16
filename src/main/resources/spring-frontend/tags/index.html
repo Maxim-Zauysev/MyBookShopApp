@@ -20,7 +20,7 @@
   <!--meta( http-equiv="cache-control" content="no-cache")-->
   <!--meta( http-equiv="expires" content="0")-->
   <!--link(rel="preload" href="assets/css/extra.min.css?v=" + version as="style" crossorigin="anonymous")-->
-  <link href="favicon.ico" rel="shortcut icon">
+  <link href="/favicon.ico" rel="shortcut icon">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
@@ -62,13 +62,13 @@
           <div class="Cards Cards_refresh">
             <div class="Card" th:each="book: ${booksByTag}">
               <div class="Card-picture">
-                <a href="#a" th:href="${book.id}">
+                <a href="#a" th:href="@{'/book/'+${book.slug}}">
                   <img th:src="${book.image}" alt="card.jpg"/>
                 </a>
               </div>
               <div class="Card-content">
                 <strong class="Card-title">
-                  <a href="#" th:text="${book.title}"></a>
+                  <a href="#" th:href="@{'/book/'+${book.slug}}" th:text="${book.title}"></a>
                 </strong>
                 <div class="Card-description"  th:each="author: ${book.getAuthors()}" th:text="${author.name}"></div>
                 <div class="Card-cost">

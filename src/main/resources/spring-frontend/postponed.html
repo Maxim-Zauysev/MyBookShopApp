@@ -61,7 +61,7 @@
         <form class="form Cart Cart_postponed" action="#" method="post">
           <div class="Cart-product" th:each="book : ${bookPostponed}">
             <div class="Cart-block Cart-block_row">
-              <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" th:src="${book.image}" src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
+              <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#" th:href="@{'/book/'+${book.slug}}"><img class="Cart-img" th:src="${book.image}" src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
               </div>
               <div class="Cart-block Cart-block_row">
                 <div class="Cart-block Cart-block_info">
@@ -69,35 +69,35 @@
                   </div>
                   <div class="Cart-title"  th:text="${book.title}"><a href="#">Жизнь</a>
                   </div>
-                  <div class="Cart-rating"><span class="Rating"><span class="Rating-stars"><span class="Rating-star Rating-star_view">
+                  <div class="Cart-rating"><span class="Rating"><span class="Rating-stars"><span class="Rating-star" th:classappend="${book.getRating() >= 1} ? 'Rating-star_view' : ''">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
                                 <path fill="#ffc000" d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star Rating-star_view">
+                          </svg></span><span class="Rating-star" th:classappend="${book.getRating() >= 2} ? 'Rating-star_view' : ''">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
                                 <path fill="#ffc000" d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star Rating-star_view">
+                          </svg></span><span class="Rating-star" th:classappend="${book.getRating() >= 3} ? 'Rating-star_view' : ''">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
                                 <path fill="#ffc000" d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star Rating-star_view">
+                          </svg></span><span class="Rating-star" th:classappend="${book.getRating() >= 4} ? 'Rating-star_view' : ''">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
                                 <path fill="#ffc000" d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star">
+                          </svg></span><span class="Rating-star" th:classappend="${book.getRating() >= 5} ? 'Rating-star_view' : ''">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -108,6 +108,11 @@
                   </div>
                   <div class="Cart-buttons">
                     <div class="Cart-btn">
+                      <button class="btn btn_primary btn_outline" data-sendstatus="CART"
+                              data-bookid="[1111]" th:attr="data-bookid = ${book.slug}" data-btntype="check" data-btnradio="buyblock" data-check="false" data-alttext="В корзине"><span class="btn-icon">
+                    <img src="/assets/img/icons/shopping-basket.svg" alt="shopping-basket.svg"/></span>
+                        <span class="btn-content">Купить</span>
+                      </button>
                       <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK" data-bookid="[1111]" th:attr="data-bookid = ${'postponed/remove/' + book.slug}">
                         <span class="btn-icon"><img src="/assets/img/icons/trash.svg" alt="trash.svg"/></span><span class="btn-content" th:text="#{cart.delete}">Удалить</span>
                       </button>

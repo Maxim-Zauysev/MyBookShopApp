@@ -1,6 +1,9 @@
 package com.example.MyBookShopApp.data.user;
 
 import com.example.MyBookShopApp.data.book.links.Book2UserEntity;
+import com.example.MyBookShopApp.data.book.review.BookRatingEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
@@ -30,6 +33,11 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Book2UserEntity> bookUsers ;
+
+    @OneToMany(mappedBy = "user")
+    @ApiModelProperty("book rating entities")
+    @JsonIgnore
+    private List<BookRatingEntity> bookRatingEntities;
 
     public int getId() {
         return id;

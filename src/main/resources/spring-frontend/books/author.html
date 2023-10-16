@@ -58,13 +58,13 @@
           <div class="Cards Cards_refresh">
             <div class="Card" th:each="book: ${authorBooks}">
               <div class="Card-picture">
-                <a href="#a" th:href="${book.id}">
+                <a href="#a" th:href="@{'/book/'+${book.slug}}">
                   <img th:src="${book.image}" alt="card.jpg"/>
                 </a>
               </div>
               <div class="Card-content">
                 <strong class="Card-title">
-                  <a href="#" th:text="${book.title}"></a>
+                  <a href="#" th:href="@{'/book/'+${book.slug}}" th:text="${book.title}"></a>
                 </strong>
                 <div class="Card-description" th:each="author: ${book.getAuthors()}" th:text="${author.getName()}"></div>
                 <div class="Card-cost">

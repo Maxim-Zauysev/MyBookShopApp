@@ -56,4 +56,11 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     Book findBookBySlug(String slug);
 
     List<Book> findBooksBySlugIn(String[] slug);
+
+    @Query(nativeQuery = true,
+    value = "SELECT COUNT(*) AS rating_count FROM book_rating WHERE rating =:rating AND book_id =:bookId")
+    Integer getRatingCountByBookId(Long rating, Long bookId);
+
+    @Query(nativeQuery = true,value = "SELECT avg(br.rating) AS avg_rating FROM books b JOIN book_rating br ON b.id = br.book_id WHERE b.id =:bookId GROUP BY b.id")
+    Integer getBookAvgRating(Long bookId);
 }

@@ -84,6 +84,8 @@ public class BookShopCartController {
     private String handleRequest(String cookieContents, Model model, String attribute, String viewName, String bookAttribute) {
         if (cookieContents == null || cookieContents.equals("")) {
             model.addAttribute(attribute, true);
+            model.addAttribute("sumPriceOld", 0);
+            model.addAttribute("sumPrice", 0);
         } else {
             model.addAttribute(attribute, false);
             cookieContents = cookieContents.startsWith("/") ? cookieContents.substring(1) : cookieContents;
@@ -92,6 +94,17 @@ public class BookShopCartController {
             String[] cookieSlugs = cookieContents.split("/");
             List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
             model.addAttribute(bookAttribute, booksFromCookieSlugs);
+
+            int sumPriceOld = 0;
+            int sumPrice = 0;
+
+            for (Book book: booksFromCookieSlugs) {
+                sumPriceOld += book.getPriceOld();
+                sumPrice += book.discountPrice();
+            }
+            model.addAttribute("sumPriceOld", sumPriceOld);
+            model.addAttribute("sumPrice", sumPrice);
+
         }
 
         return viewName;

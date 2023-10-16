@@ -72,7 +72,7 @@
             <div class="Cards">
               <div class="Card" th:each="book: ${popularBooks}">
                 <div class="Card-picture">
-                  <a href="#a" th:href="${book.id}">
+                  <a href="#a" th:href="@{'/book/'+${book.slug}}">
                     <img th:src="${book.image}" alt="card.jpg"/>
                   </a>
                 </div>

@@ -49,6 +49,11 @@ public class BooksController {
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         Book book = bookRepository.findBookBySlug(slug);
         model.addAttribute("slugBook", book);
+        model.addAttribute("oneRating", bookRepository.getRatingCountByBookId(1l,book.getId()));
+        model.addAttribute("twoRating", bookRepository.getRatingCountByBookId(2l,book.getId()));
+        model.addAttribute("threeRating", bookRepository.getRatingCountByBookId(3l,book.getId()));
+        model.addAttribute("fourRating", bookRepository.getRatingCountByBookId(4l,book.getId()));
+        model.addAttribute("fiveRating", bookRepository.getRatingCountByBookId(5l,book.getId()));
         return "/books/slug";
     }
 

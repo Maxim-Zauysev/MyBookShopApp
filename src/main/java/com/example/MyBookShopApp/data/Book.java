@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.data;
 
 
 import com.example.MyBookShopApp.data.book.links.Book2UserEntity;
+import com.example.MyBookShopApp.data.book.review.BookRatingEntity;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -60,6 +61,19 @@ public class Book {
     @ApiModelProperty("book price without discount")
     private Integer priceOld;
 
+    /*
+    Использовал триггеры
+
+    BEGIN
+  UPDATE books SET rating = (SELECT AVG(rating) FROM book_rating WHERE book_id = NEW.book_id) WHERE id = NEW.book_id;
+  RETURN NEW;
+END;
+     */
+    @Column(name = "rating")
+    @JsonProperty("rating")
+    @ApiModelProperty("book rating")
+    private Double rating;
+
     @Column(name = "discount")
     @JsonProperty("discount")
     @ApiModelProperty("discount value for book")
@@ -85,6 +99,11 @@ public class Book {
     @JsonIgnore
     private List<BookFile> bookFileList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "book")
+    @ApiModelProperty("book rating entities")
+    @JsonIgnore
+    private List<BookRatingEntity> bookRatingEntities;
+
     @JsonProperty
     public Integer discountPrice(){
         Integer discountedPrice = priceOld - Math.toIntExact(Math.round(priceOld*price));
@@ -107,6 +126,14 @@ public class Book {
         return bookFileList;
     }
 
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
     public void setBookFileList(List<BookFile> bookFileList) {
         this.bookFileList = bookFileList;
     }
@@ -127,6 +154,13 @@ public class Book {
         this.tags = tagEntityEntityList;
     }
 
+    public List<BookRatingEntity> getBookRatingEntities() {
+        return bookRatingEntities;
+    }
+
+    public void setBookRatingEntities(List<BookRatingEntity> bookRatingEntities) {
+        this.bookRatingEntities = bookRatingEntities;
+    }
 
     public List<TagEntity> getTags() {
         return tags;
