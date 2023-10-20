@@ -11,7 +11,7 @@ import javax.persistence.*;
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+        private Long id;
 
         @ManyToOne
         @JoinColumn(name = "book_id", referencedColumnName = "id")
@@ -23,14 +23,27 @@ import javax.persistence.*;
         @JsonIgnore
         private UserEntity user;
 
-        @Column(columnDefinition = "SMALLINT NOT NULL")
-        private int rating;
+        @OneToOne(mappedBy = "bookRatingEntity")
+        private BookReviewEntity bookReviewEntity;
 
-        public int getId() {
+        @Column(columnDefinition = "SMALLINT NOT NULL")
+        private Integer rating;
+
+        public Long getId() {
             return id;
         }
 
-        public void setId(int id) {
+
+
+        public BookReviewEntity getBookReviewEntity() {
+            return bookReviewEntity;
+        }
+
+        public void setBookReviewEntity(BookReviewEntity bookReviewEntity) {
+            this.bookReviewEntity = bookReviewEntity;
+        }
+
+        public void setId(Long id) {
             this.id = id;
         }
 
@@ -54,7 +67,7 @@ import javax.persistence.*;
             return rating;
         }
 
-        public void setRating(int rating) {
+        public void setRating(Integer rating) {
             this.rating = rating;
         }
     }

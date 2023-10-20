@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.data;
 
 import com.example.MyBookShopApp.data.book.links.Book2UserEntity;
 import com.example.MyBookShopApp.data.book.review.BookRatingEntity;
+import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -62,12 +63,11 @@ public class Book {
     private Integer priceOld;
 
     /*
-    Использовал триггеры
-
+    Использовал триггер
     BEGIN
-  UPDATE books SET rating = (SELECT AVG(rating) FROM book_rating WHERE book_id = NEW.book_id) WHERE id = NEW.book_id;
-  RETURN NEW;
-END;
+      UPDATE books SET rating = (SELECT AVG(rating) FROM book_rating WHERE book_id = NEW.book_id) WHERE id = NEW.book_id;
+      RETURN NEW;
+    END;
      */
     @Column(name = "rating")
     @JsonProperty("rating")
@@ -120,6 +120,16 @@ END;
     @JsonGetter("pub")
     public String pub(){
         return new SimpleDateFormat("yyyy/MM/dd").format(pubDate);
+    }
+
+
+    @JsonIgnore
+    public List<BookReviewEntity> getReviewList() {
+        List<BookReviewEntity> list = new ArrayList<>();
+        for (BookRatingEntity ratingEntity : getBookRatingEntities()) {
+            if (ratingEntity.getBookReviewEntity() != null) list.add(ratingEntity.getBookReviewEntity());
+        }
+        return list;
     }
 
     public List<BookFile> getBookFileList() {

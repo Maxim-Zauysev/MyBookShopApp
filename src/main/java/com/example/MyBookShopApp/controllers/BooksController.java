@@ -2,8 +2,11 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.ResourceStorage;
-import com.example.MyBookShopApp.data.SearchWordDto;
-import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.data.book.review.BookRatingEntity;
+import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
+import com.example.MyBookShopApp.data.dto.SearchWordDto;
+import com.example.MyBookShopApp.data.user.UserEntity;
+import com.example.MyBookShopApp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
@@ -17,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -28,6 +32,10 @@ public class BooksController {
 
     private final BookRepository bookRepository;
     private final ResourceStorage storage;
+    private final BookReviewRepository reviewRepository;
+    private final BookRatingRepository ratingRepository;
+    private final BookReviewLikeEntityRepository likeRepository;
+    private final UserRepository userRepository;
 
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
@@ -40,9 +48,13 @@ public class BooksController {
     }
 
     @Autowired
-    public BooksController(BookRepository bookRepository,ResourceStorage storage) {
+    public BooksController(BookRepository bookRepository, ResourceStorage storage, BookReviewRepository reviewRepository, BookRatingRepository ratingRepository, BookReviewLikeEntityRepository likeRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.storage = storage;
+        this.reviewRepository = reviewRepository;
+        this.ratingRepository = ratingRepository;
+        this.likeRepository = likeRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/{slug}")
@@ -55,6 +67,31 @@ public class BooksController {
         model.addAttribute("fourRating", bookRepository.getRatingCountByBookId(4l,book.getId()));
         model.addAttribute("fiveRating", bookRepository.getRatingCountByBookId(5l,book.getId()));
         return "/books/slug";
+    }
+
+    @PostMapping("/{slug}/review/save")
+    public String saveReview(@PathVariable("slug") String slug,
+                             @RequestParam String text,
+                             @RequestParam("rating") Integer rating){
+        Book book = bookRepository.findBookBySlug(slug);
+
+        if(rating == null){
+            ;
+        }
+
+        BookRatingEntity bookRating = new BookRatingEntity();
+        bookRating.setRating(rating);
+        bookRating.setBook(book);
+        bookRating.setUser(null);
+        ratingRepository.save(bookRating);
+
+        BookReviewEntity bookReview = new BookReviewEntity();
+        bookReview.setBookRatingEntity(bookRating);
+        bookReview.setText(text);
+        bookReview.setTime(LocalDateTime.now());
+        reviewRepository.save(bookReview);
+
+        return "redirect:/book/" + slug;
     }
 
     @PostMapping("/{slug}/img/save")

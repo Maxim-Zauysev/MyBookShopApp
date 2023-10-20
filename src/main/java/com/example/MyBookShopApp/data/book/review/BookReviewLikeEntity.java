@@ -1,5 +1,7 @@
 package com.example.MyBookShopApp.data.book.review;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
@@ -10,19 +12,34 @@ public class BookReviewLikeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(columnDefinition = "INT NOT NULL")
-    private int reviewId;
-
-    @Column(columnDefinition = "INT NOT NULL")
-    private int userId;
+    private Integer userId;
 
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDateTime time;
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
-    private short value;
+    private Short value;
+
+    @ManyToOne
+    @JoinColumn(name = "review_id", referencedColumnName = "id")
+    @JsonIgnore
+    private BookReviewEntity bookReviewEntity;
+
+
+    public BookReviewLikeEntity() {
+    }
+
+    public BookReviewEntity getBookReviewEntity() {
+        return bookReviewEntity;
+    }
+
+    public void setBookReviewEntity(BookReviewEntity bookReviewEntity) {
+        this.bookReviewEntity = bookReviewEntity;
+    }
+
 
     public int getId() {
         return id;
@@ -30,14 +47,6 @@ public class BookReviewLikeEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
     }
 
     public int getUserId() {
@@ -56,11 +65,11 @@ public class BookReviewLikeEntity {
         this.time = time;
     }
 
-    public short getValue() {
+    public Short getValue() {
         return value;
     }
 
-    public void setValue(short value) {
+    public void setValue(Short value) {
         this.value = value;
     }
 }

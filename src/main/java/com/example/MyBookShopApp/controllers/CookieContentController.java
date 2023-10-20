@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Book;
-import com.example.MyBookShopApp.data.SearchWordDto;
+import com.example.MyBookShopApp.data.dto.SearchWordDto;
 import com.example.MyBookShopApp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,12 @@ import java.util.StringJoiner;
 
 @Controller
 @RequestMapping("/books")
-public class BookShopCartController {
+public class CookieContentController {
 
     private final BookRepository bookRepository;
 
     @Autowired
-    public BookShopCartController(BookRepository bookRepository) {
+    public CookieContentController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 

@@ -1,8 +1,12 @@
 package com.example.MyBookShopApp.data.book.review;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @Table(name = "book_review")
@@ -10,13 +14,7 @@ public class BookReviewEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(columnDefinition = "INT NOT NULL")
-    private int bookId;
-
-    @Column(columnDefinition = "INT NOT NULL")
-    private int userId;
+    private Long id;
 
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDateTime time;
@@ -24,28 +22,64 @@ public class BookReviewEntity {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
 
-    public int getId() {
+    @OneToOne
+    @JoinColumn(name = "rating_id",referencedColumnName = "id")
+    private BookRatingEntity bookRatingEntity;
+
+    @OneToMany(mappedBy = "bookReviewEntity")
+    @JsonIgnore
+    private List<BookReviewLikeEntity> bookReviewLikeEntities;
+
+    @PrePersist
+    public void prePersist() {
+        this.time = LocalDateTime.now();
+    }
+
+    public BookReviewEntity() {
+    }
+
+    public Integer getLikesCount() {
+        int result = 0;
+        for (BookReviewLikeEntity like : getBookReviewLikeEntities()) {
+            if (like.getValue() == 1) result++;
+        }
+        return result;
+    }
+
+    public Integer getDislikesCount() {
+        int result = 0;
+        for (BookReviewLikeEntity like : getBookReviewLikeEntities()) {
+            if (like.getValue() == -1) result++;
+        }
+        return result;
+    }
+
+    public String getStringTime() {
+        return getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getBookId() {
-        return bookId;
+
+    public BookRatingEntity getBookRatingEntity() {
+        return bookRatingEntity;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBookRatingEntity(BookRatingEntity bookRatingEntity) {
+        this.bookRatingEntity = bookRatingEntity;
     }
 
-    public int getUserId() {
-        return userId;
+    public List<BookReviewLikeEntity> getBookReviewLikeEntities() {
+        return bookReviewLikeEntities;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setBookReviewLikeEntities(List<BookReviewLikeEntity> bookReviewLikeEntities) {
+        this.bookReviewLikeEntities = bookReviewLikeEntities;
     }
 
     public LocalDateTime getTime() {

@@ -3,8 +3,8 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Author;
 import com.example.MyBookShopApp.data.Book;
-import com.example.MyBookShopApp.data.BooksPageDto;
-import com.example.MyBookShopApp.data.SearchWordDto;
+import com.example.MyBookShopApp.data.dto.BooksPageDto;
+import com.example.MyBookShopApp.data.dto.SearchWordDto;
 import com.example.MyBookShopApp.services.AuthorService;
 import com.example.MyBookShopApp.services.BookService;
 import io.swagger.annotations.Api;
