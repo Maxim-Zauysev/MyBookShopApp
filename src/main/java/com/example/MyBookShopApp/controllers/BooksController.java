@@ -34,7 +34,6 @@ public class BooksController {
     private final ResourceStorage storage;
     private final BookReviewRepository reviewRepository;
     private final BookRatingRepository ratingRepository;
-    private final BookReviewLikeEntityRepository likeRepository;
     private final UserRepository userRepository;
 
     @ModelAttribute("searchWordDto")
@@ -48,12 +47,11 @@ public class BooksController {
     }
 
     @Autowired
-    public BooksController(BookRepository bookRepository, ResourceStorage storage, BookReviewRepository reviewRepository, BookRatingRepository ratingRepository, BookReviewLikeEntityRepository likeRepository, UserRepository userRepository) {
+    public BooksController(BookRepository bookRepository, ResourceStorage storage, BookReviewRepository reviewRepository, BookRatingRepository ratingRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.storage = storage;
         this.reviewRepository = reviewRepository;
         this.ratingRepository = ratingRepository;
-        this.likeRepository = likeRepository;
         this.userRepository = userRepository;
     }
 
@@ -69,15 +67,21 @@ public class BooksController {
         return "/books/slug";
     }
 
+    @PostMapping("/{slug}/img/save")
+    public String saveNewBookImage(@RequestParam("file")MultipartFile file,@PathVariable("slug")String slug) throws IOException {
+        String savePath = storage.saveNewBookImage(file,slug);
+        Book bookToUpdate = bookRepository.findBookBySlug(slug);
+        bookToUpdate.setImage(savePath);
+        bookRepository.save(bookToUpdate);
+
+        return "redirect:/book/"+slug;
+    }
+
     @PostMapping("/{slug}/review/save")
     public String saveReview(@PathVariable("slug") String slug,
                              @RequestParam String text,
                              @RequestParam("rating") Integer rating){
         Book book = bookRepository.findBookBySlug(slug);
-
-        if(rating == null){
-            ;
-        }
 
         BookRatingEntity bookRating = new BookRatingEntity();
         bookRating.setRating(rating);
@@ -94,15 +98,7 @@ public class BooksController {
         return "redirect:/book/" + slug;
     }
 
-    @PostMapping("/{slug}/img/save")
-    public String saveNewBookImage(@RequestParam("file")MultipartFile file,@PathVariable("slug")String slug) throws IOException {
-        String savePath = storage.saveNewBookImage(file,slug);
-        Book bookToUpdate = bookRepository.findBookBySlug(slug);
-        bookToUpdate.setImage(savePath);
-        bookRepository.save(bookToUpdate);
 
-        return "redirect:/book/"+slug;
-    }
 
     @GetMapping("/download/{hash}")
     public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
