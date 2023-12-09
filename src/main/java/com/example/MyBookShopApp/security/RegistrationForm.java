@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.security;
 
+
 public class RegistrationForm {
 
     private String name;

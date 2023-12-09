@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.security;
 
 public class ContactConfirmationPayload {
+
     private String contact;
     private String code;
 

@@ -68,6 +68,9 @@ public class Book {
       UPDATE books SET rating = (SELECT AVG(rating) FROM book_rating WHERE book_id = NEW.book_id) WHERE id = NEW.book_id;
       RETURN NEW;
     END;
+
+    UPDATE books b
+    SET rating = (SELECT AVG(br.rating) FROM book_rating br WHERE b.id = br.book_id);
      */
     @Column(name = "rating")
     @JsonProperty("rating")

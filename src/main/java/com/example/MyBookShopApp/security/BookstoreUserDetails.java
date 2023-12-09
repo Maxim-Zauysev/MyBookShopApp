@@ -8,12 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class BookStoreUserDetail implements UserDetails {
 
-    private final BookStoreUser bookStoreUser;
+public class BookstoreUserDetails implements UserDetails {
 
-    public BookStoreUserDetail(BookStoreUser bookStoreUser) {
-        this.bookStoreUser = bookStoreUser;
+    private final UserEntity bookstoreUser;
+
+    public BookstoreUserDetails(UserEntity bookstoreUser) {
+        this.bookstoreUser = bookstoreUser;
+    }
+
+    public UserEntity getBookstoreUser() {
+        return bookstoreUser;
     }
 
     @Override
@@ -23,12 +28,12 @@ public class BookStoreUserDetail implements UserDetails {
 
     @Override
     public String getPassword() {
-        return bookStoreUser.getPassword();
+        return bookstoreUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return bookStoreUser.getEmail();
+        return bookstoreUser.getEmail();
     }
 
     @Override
@@ -49,9 +54,5 @@ public class BookStoreUserDetail implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public BookStoreUser getBookStoreUser() {
-        return bookStoreUser;
     }
 }
