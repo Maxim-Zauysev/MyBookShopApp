@@ -42,10 +42,15 @@ public class BookstoreUserRegister {
             Date date = new Date();
             String newDateFrom = newDateFormat.format(date);
             date = newDateFormat.parse(newDateFrom);
+
             user.setName(registrationForm.getName());
             user.setEmail(registrationForm.getEmail());
             user.setPhone(registrationForm.getPhone());
             user.setPassword(passwordEncoder.encode(registrationForm.getPass()));
+            user.setHash(Integer.toString(user.hashCode()));
+            user.setBalance(0);
+            user.setRegTime(date);
+
             bookstoreUserRepository.save(user);
         }
     }
