@@ -35,7 +35,7 @@ public class BookstoreUserRegister {
         this.jwtUtil = jwtUtil;
     }
 
-    public void registerNewUser(RegistrationForm registrationForm) throws ParseException {
+    public UserEntity registerNewUser(RegistrationForm registrationForm) throws ParseException {
 
         if (bookstoreUserRepository.findUserEntityByEmail(registrationForm.getEmail()) == null) {
             UserEntity user = new UserEntity();
@@ -52,7 +52,10 @@ public class BookstoreUserRegister {
             user.setRegTime(date);
 
             bookstoreUserRepository.save(user);
+
+            return user;
         }
+        return null;
     }
 
     public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
