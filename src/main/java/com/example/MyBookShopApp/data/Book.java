@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
@@ -82,17 +83,21 @@ public class Book {
     @ApiModelProperty("discount value for book")
     private Double price;
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
     @JsonIgnore
+    @BatchSize(size = 5)
     private List<TagEntity> tags;
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
     @JsonIgnore
+    @BatchSize(size = 5)
     private List<GenreEntity> genres;
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Author> authors ;
+    @BatchSize(size = 5)
+    private List<Author> authors;
+
 
     @OneToMany(mappedBy = "book")
     @JsonIgnore
@@ -134,6 +139,18 @@ public class Book {
         }
         return list;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Book{" +
+//                "id=" + id +
+//                ", isBestseller=" + isBestseller +
+//                ", title='" + title + '\'' +
+//                ", rating=" + rating +
+//                ", tags=" + tags +
+//                ", authors=" + authors +
+//                '}';
+//    }
 
     public List<BookFile> getBookFileList() {
         return bookFileList;
