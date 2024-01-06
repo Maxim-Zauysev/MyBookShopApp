@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,13 +36,19 @@ public class BookstoreUserRegister {
         this.jwtUtil = jwtUtil;
     }
 
-    public void registerNewUser(RegistrationForm registrationForm) throws ParseException {
+    public void registerNewUser(RegistrationForm registrationForm)  {
+        UserEntity byEmail = bookstoreUserRepository.findUserEntityByEmail(registrationForm.getEmail());
+        UserEntity byPhone = bookstoreUserRepository.findUserEntityByPhone(registrationForm.getPhone());
 
-        if (bookstoreUserRepository.findUserEntityByEmail(registrationForm.getEmail()) == null) {
+        if (byEmail == null && byPhone == null) {
             UserEntity user = new UserEntity();
             Date date = new Date();
             String newDateFrom = newDateFormat.format(date);
-            date = newDateFormat.parse(newDateFrom);
+            try {
+                date = newDateFormat.parse(newDateFrom);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
 
             user.setName(registrationForm.getName());
             user.setEmail(registrationForm.getEmail());
@@ -82,5 +89,17 @@ public class BookstoreUserRegister {
         BookstoreUserDetails userDetails =
                 (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getBookstoreUser();
+    }
+
+    public ContactConfirmationResponse jwtLoginByPhoneNumber(ContactConfirmationPayload payload) {
+        RegistrationForm registrationForm = new RegistrationForm();
+        registrationForm.setPhone(payload.getContact());
+        registrationForm.setPass(payload.getCode());
+        registerNewUser(registrationForm);
+        UserDetails userDetails =  bookstoreUserDetailsService.loadUserByUsername(payload.getContact());
+        String jwtToken = jwtUtil.generateToken(userDetails);
+        ContactConfirmationResponse response = new ContactConfirmationResponse();
+        response.setResult(jwtToken);
+        return response;
     }
 }

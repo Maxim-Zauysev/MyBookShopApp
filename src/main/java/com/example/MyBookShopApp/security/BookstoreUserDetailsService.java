@@ -23,8 +23,13 @@ public class BookstoreUserDetailsService implements UserDetailsService {
         UserEntity bookstoreUser = bookstoreUserRepository.findUserEntityByEmail(s);
         if(bookstoreUser!=null){
             return new BookstoreUserDetails(bookstoreUser);
-        }else{
-            throw new UsernameNotFoundException("user not found doh!");
+        }
+
+        bookstoreUser = bookstoreUserRepository.findUserEntityByPhone(s);
+        if(bookstoreUser !=null){
+            return new PhoneNumberUserDetails(bookstoreUser);
+        }else {
+            throw new UsernameNotFoundException("user not fount");
         }
     }
 }
