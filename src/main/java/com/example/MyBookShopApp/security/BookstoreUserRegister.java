@@ -24,7 +24,7 @@ public class BookstoreUserRegister {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final BookstoreUserDetailsService bookstoreUserDetailsService;
-    private final DateFormat newDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    public static final DateFormat newDateFormat = new SimpleDateFormat("yyyy/MM/dd");
     private final JWTUtil jwtUtil;
 
     @Autowired
@@ -39,6 +39,7 @@ public class BookstoreUserRegister {
     public void registerNewUser(RegistrationForm registrationForm)  {
         UserEntity byEmail = bookstoreUserRepository.findUserEntityByEmail(registrationForm.getEmail());
         UserEntity byPhone = bookstoreUserRepository.findUserEntityByPhone(registrationForm.getPhone());
+
 
         if (byEmail == null && byPhone == null) {
             UserEntity user = new UserEntity();
@@ -59,7 +60,10 @@ public class BookstoreUserRegister {
             user.setRegTime(date);
 
             bookstoreUserRepository.save(user);
+
+
         }
+
     }
 
     public ContactConfirmationResponse login(ContactConfirmationPayload payload) {

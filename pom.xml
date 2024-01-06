@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<property name="hibernate.enable_lazy_load_no_trans" value="true"/>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -95,6 +96,7 @@
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 			<version>3.2.0</version>
 		</dependency>
+<<<<<<< HEAD
 		<!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
@@ -102,6 +104,51 @@
 			<version>9.14.1</version>
 		</dependency>
 
+=======
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<version>4.2.20.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.10.0</version>
+		</dependency>
+		<!-- only this origin -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<!-- add belows for these dependencies version is not 4.0.0 when automatically generated -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>4.0.0</version> <!-- замените на актуальную версию -->
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-api</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+>>>>>>> b3f1ff0cd5dd437b7ed7f199326636da6cf83b60
 	</dependencies>
 
 	<build>

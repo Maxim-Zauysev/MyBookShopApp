@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.repository;
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.TagEntity;
 import liquibase.pro.packaged.T;
+import org.hibernate.annotations.Fetch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,9 +26,9 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     @Query(nativeQuery = true, value = "SELECT books.*\n" +
             "FROM books\n" +
-            "INNER JOIN book2author ON books.id = book2author.book_id\n" +
+            "INNER JOIN  book2author ON books.id = book2author.book_id\n" +
             "INNER JOIN author ON book2author.author_id = author.id\n" +
-            "WHERE author.name=:authorsName")
+            "WHERE author.name like %:authorsName%")
     List<Book> findBooksByAuthorNameContaining(String authorsName);
 
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)",nativeQuery = true)
